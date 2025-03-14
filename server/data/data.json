@@ -1,0 +1,590 @@
+[
+      {
+        "name":"S1",
+        "type": "govt",
+        "source": "Gandhipuram",
+        "destination": "Singanallur",
+        "routes": [
+          {"stage": "0", "place": "Gandhipuram"},
+          {"stage": "1", "place": "Town Hall"},
+          {"stage": "2", "place": "Railway Station"},
+          {"stage": "3", "place": "Singanallur"}
+        ]
+      },
+      {
+        "name":"S2",
+        "type": "private",
+        "source": "Peelamedu",
+        "destination": "Ramanathapuram",
+        "routes": [
+          {"stage": "0", "place": "Peelamedu"},
+          {"stage": "1", "place": "Hope College"},
+          {"stage": "2", "place": "Hopes"},
+          {"stage": "3", "place": "Ramanathapuram"}
+        ]
+      },
+      {
+        "name":"S3",
+        "type": "premium",
+        "source": "Ukkadam",
+        "destination": "Saravanampatti",
+        "routes": [
+          {"stage": "0", "place": "Ukkadam"},
+          {"stage": "1", "place": "Ganapathy"},
+          {"stage": "2", "place": "Kurichi"},
+          {"stage": "3", "place": "Saravanampatti"}
+        ]
+      },
+      {
+        "name":"S4",
+        "type": "private",
+        "source": "Ganapathy",
+        "destination": "Thudiyalur",
+        "routes": [
+          {"stage": "0", "place": "Ganapathy"},
+          {"stage": "1", "place": "NGGO Colony"},
+          {"stage": "2", "place": "Chinnavedampatti"},
+          {"stage": "3", "place": "Thudiyalur"}
+        ]
+      },
+      {
+        "name":"S5",
+        "type": "govt",
+        "source": "Ondipudur",
+        "destination": "Sulur",
+        "routes": [
+          {"stage": "0", "place": "Ondipudur"},
+          {"stage": "1", "place": "Singanallur"},
+          {"stage": "2", "place": "Peelamedu"},
+          {"stage": "3", "place": "Sulur"}
+        ]
+      },
+      {
+        "name":"S6",
+        "type": "private",
+        "source": "Podanur",
+        "destination": "Pappanaickenpalayam",
+        "routes": [
+          {"stage": "0", "place": "Podanur"},
+          {"stage": "1", "place": "VOC Park"},
+          {"stage": "2", "place": "Ramanathapuram"},
+          {"stage": "3", "place": "Pappanaickenpalayam"}
+        ]
+      },
+      {
+        "name":"S7",
+        "type": "premium",
+        "source": "Kuniyamuthur",
+        "destination": "Peelamedu",
+        "routes": [
+          {"stage": "0", "place": "Kuniyamuthur"},
+          {"stage": "1", "place": "Singanallur"},
+          {"stage": "2", "place": "Hope College"},
+          {"stage": "3", "place": "Peelamedu"}
+        ]
+      },
+      {
+        "name":"S8",
+        "type": "private",
+        "source": "Saravanampatti",
+        "destination": "Ganapathy",
+        "routes": [
+          {"stage": "0", "place": "Saravanampatti"},
+          {"stage": "1", "place": "Vellalore"},
+          {"stage": "2", "place": "Ganapathy"}
+        ]
+      },
+      {
+        "name":"S9",
+        "type": "govt",
+        "source": "Perur",
+        "destination": "Thudiyalur",
+        "routes": [
+          {"stage": "0", "place": "Perur"},
+          {"stage": "1", "place": "Vadavalli"},
+          {"stage": "2", "place": "Gandhipuram"},
+          {"stage": "3", "place": "Thudiyalur"}
+        ]
+      },
+      {
+        "name":"S10",
+        "type": "premium",
+        "source": "Peelamedu",
+        "destination": "Podanur",
+        "routes": [
+          {"stage": "0", "place": "Peelamedu"},
+          {"stage": "1", "place": "Singanallur"},
+          {"stage": "2", "place": "Ukkadam"},
+          {"stage": "3", "place": "Podanur"}
+        ]
+      },
+      {
+        "name":"1",
+        "type": "premium",
+        "source": "Avarampalayam",
+        "destination": "Maruthamalai",
+        "routes": [
+          {"stage": "0", "place": "Avarampalayam"},
+          {"stage": "1", "place": "Gandhipuram"},
+          {"stage": "2", "place": "Sukravarpet"},
+          {"stage": "3", "place": "Agri University"},
+          {"stage": "4", "place": "Bharathiar University"},
+          {"stage": "5", "place": "Maruthamalai"}
+        ]
+      },
+      {
+        "name":"1A",
+        "type": "govt",
+        "source": "Maruthamalai",
+        "destination": "Pommanam Pirivu",
+        "routes": [
+          {"stage": "0", "place": "Maruthamalai"},
+          {"stage": "1", "place": "Vadavalli"},
+          {"stage": "2", "place": "Pommanam Pirivu"}
+        ]
+      },
+      {
+        "name":"1B",
+        "type": "private",
+        "source": "Maruthamalai",
+        "destination": "Ondipudur",
+        "routes": [
+          {"stage": "0", "place": "Maruthamalai"},
+          {"stage": "1", "place": "Singanallur"},
+          {"stage": "2", "place": "Ramanathapuram"},
+          {"stage": "3", "place": "Gandhipuram"},
+          {"stage": "4", "place": "Agri University"},
+          {"stage": "5", "place": "Vadavalli"},
+          {"stage": "6", "place": "Ondipudur"}
+        ]
+      },
+      {
+        "name":"1C",
+        "type": "govt",
+        "source": "Ondipudur",
+        "destination": "Vadavalli",
+        "routes": [
+          {"stage": "0", "place": "Ondipudur"},
+          {"stage": "1", "place": "Singanallur"},
+          {"stage": "2", "place": "Ramanathapuram"},
+          {"stage": "3", "place": "Railway Station"},
+          {"stage": "4", "place": "Gandhipark"},
+          {"stage": "5", "place": "Agri University"},
+          {"stage": "6", "place": "Vadavalli"}
+        ]
+      },
+      {
+        "name":"1D",
+        "type": "private",
+        "source": "Ondipudur",
+        "destination": "Vadavalli",
+        "routes": [
+          {"stage": "0", "place": "Ondipudur"},
+          {"stage": "1", "place": "Saint Joseph Matriculation Secondary School"},
+          {"stage": "2", "place": "Shanthi Gears"},
+          {"stage": "3", "place": "Singanallur"},
+          {"stage": "4", "place": "Singanallur Police Station"},
+          {"stage": "5", "place": "Sungam"},
+          {"stage": "6", "place": "Air India"},
+          {"stage": "7", "place": "Government Hospital"},
+          {"stage": "8", "place": "Railway Station"},
+          {"stage": "9", "place": "Collector Office"},
+          {"stage": "10", "place": "Vadavalli"}
+        ]
+      },
+     {
+        "name":"1E",
+        "type": "premium",
+        "source": "Ondipudur",
+        "destination": "Maruthamalai",
+        "routes": [
+          {"stage": "0", "place": "Ondipudur"},
+          {"stage": "1", "place": "Ramanathapuram"},
+          {"stage": "2", "place": "Railway Station"},
+          {"stage": "3", "place": "Gandhipuram"},
+          {"stage": "4", "place": "Agri University"},
+          {"stage": "5", "place": "Vadavalli"},
+          {"stage": "6", "place": "Maruthamalai"}
+        ]
+      },
+      {
+        "name":"13A",
+        "type": "govt",
+        "source": "Ukkadam",
+        "destination": "Kulathur",
+        "routes": [
+          {"stage": "0", "place": "Ukkadam"},
+          {"stage": "1", "place": "Town Hall"},
+          {"stage": "2", "place": "Ramanathapuram"},
+          {"stage": "3", "place": "Singanallur"},
+          {"stage": "4", "place": "ESI"},
+          {"stage": "5", "place": "Kulathur"}
+        ]
+      },
+      {
+        "name":"13C",
+        "type": "private",
+        "source": "Cheran Colony",
+        "destination": "Ukkadam",
+        "routes": [
+          {"stage": "0", "place": "Cheran Colony"},
+          {"stage": "1", "place": "Gandhipark"},
+          {"stage": "2", "place": "Lawly Road"},
+          {"stage": "3", "place": "Ukkadam"}
+        ]
+      },
+      {
+        "name":"14",
+        "type": "premium",
+        "source": "Gandhipuram",
+        "destination": "Nathegoundenpudur",
+        "routes": [
+          {"stage": "0", "place": "Gandhipuram"},
+          {"stage": "1", "place": "Selvapuram"},
+          {"stage": "2", "place": "Perur"},
+          {"stage": "3", "place": "Madampatti"},
+          {"stage": "4", "place": "Alanthurai"},
+          {"stage": "5", "place": "Nathegoundenpudur"}
+        ]
+      },
+      {
+        "name":"14A",
+        "type": "govt",
+        "source": "Gandhipuram",
+        "destination": "Semmedu",
+        "routes": [
+          {"stage": "0", "place": "Gandhipuram"},
+          {"stage": "1", "place": "Selvapuram"},
+          {"stage": "2", "place": "Perur"},
+          {"stage": "3", "place": "Pachapalayam"},
+          {"stage": "4", "place": "Alanthurai"},
+          {"stage": "5", "place": "Eruttupallam"},
+          {"stage": "6", "place": "Semmedu"}
+        ]
+      },
+      {
+        "name":"14B",
+        "type": "private",
+        "source": "Railway Station",
+        "destination": "Molapalayam",
+        "routes": [
+          {"stage": "0", "place": "Railway Station"},
+          {"stage": "1", "place": "Selvapuram"},
+          {"stage": "2", "place": "Perur"},
+          {"stage": "3", "place": "Pachapalayam"},
+          {"stage": "4", "place": "Alanthurai"},
+          {"stage": "5", "place": "Molapalayam"}
+        ]
+      },
+      {
+        "name":"14C",
+        "type": "premium",
+        "source": "Gandhipuram",
+        "destination": "Sadivayal",
+        "routes": [
+          {"stage": "0", "place": "Gandhipuram"},
+          {"stage": "1", "place": "Selvapuram"},
+          {"stage": "2", "place": "Perur"},
+          {"stage": "3", "place": "Sadivayal"}
+        ]
+      },
+      {
+        "name":"15",
+        "type": "govt",
+        "source": "Kuniamuthur",
+        "destination": "Sivananda Mills",
+        "routes": [
+          {"stage": "0", "place": "Kuniamuthur"},
+          {"stage": "1", "place": "Ukkadam"},
+          {"stage": "2", "place": "Gandhipuram"},
+          {"stage": "3", "place": "Ganapathy"},
+          {"stage": "4", "place": "Sivananda Mills"}
+        ]
+      },
+      {
+        "name":"15B",
+        "type": "private",
+        "source": "Ukkadam",
+        "destination": "Anjugam Nagar",
+        "routes": [
+          {"stage": "0", "place": "Ukkadam"},
+          {"stage": "1", "place": "Gandhipuram"},
+          {"stage": "2", "place": "Anjugam Nagar"}
+        ]
+      },
+      {
+        "name":"16",
+        "type": "premium",
+        "source": "Kovilmedu",
+        "destination": "Kalapatti",
+        "routes": [
+          {"stage": "0", "place": "Ukkadam"},
+          {"stage": "1", "place": "Saibaba Colony"},
+          {"stage": "2", "place": "Gandhipuram"},
+          {"stage": "3", "place": "Lakshmi Mill"},
+          {"stage": "4", "place": "Sitra"},
+          {"stage": "5", "place": "Kalapatti"}
+        ]
+      },
+      {
+        "name":"16A",
+        "type": "govt",
+        "source": "Velandipalayam",
+        "destination": "Airport",
+        "routes": [
+          {"stage": "0", "place": "Velandipalayam"},
+          {"stage": "1", "place": "Saibaba Colony"},
+          {"stage": "2", "place": "Town Hall"},
+          {"stage": "3", "place": "Railway Station"},
+          {"stage": "4", "place": "Peelamedu"},
+          {"stage": "5", "place": "Nehru Nagar"},
+          {"stage": "6", "place": "Airport"}
+        ]
+      },
+      {
+        "name":"16B",
+        "type": "private",
+        "source": "Saibaba Colony",
+        "destination": "Kalapatti",
+        "routes": [
+          {"stage": "0", "place": "Saibaba Colony"},
+          {"stage": "1", "place": "Flower Market"},
+          {"stage": "2", "place": "Town Hall"},
+          {"stage": "3", "place": "Peelamedu"},
+          {"stage": "4", "place": "Nehru Nagar"},
+          {"stage": "5", "place": "Kalapatti"}
+        ]
+      },
+      {
+        "name":"16C",
+        "type": "premium",
+        "source": "Telungupalayam",
+        "destination": "Kalapatti",
+        "routes": [
+          {"stage": "0", "place": "Telungupalayam"},
+          {"stage": "1", "place": "Kalapatti"}
+        ]
+      },
+      {
+        "name":"18",
+        "type": "govt",
+        "source": "Rathinapuri",
+        "destination": "Palathurai",
+        "routes": [
+          {"stage": "0", "place": "Rathinapuri"},
+          {"stage": "1", "place": "Gandhipuram"},
+          {"stage": "2", "place": "Ukkadam"},
+          {"stage": "3", "place": "Kuniamuthur"},
+          {"stage": "4", "place": "Madukkarai Market"},
+          {"stage": "5", "place": "Palathurai"}
+        ]
+      },
+      {
+        "name":"19",
+        "type": "private",
+        "source": "Ukkadam",
+        "destination": "Nanjundapuram",
+        "routes": [
+          {"stage": "0", "place": "Ukkadam"},
+          {"stage": "1", "place": "GH"},
+          {"stage": "2", "place": "Sungam"},
+          {"stage": "3", "place": "Ramanathapuram"},
+          {"stage": "4", "place": "Nanjundapuram"}
+        ]
+      },
+      {
+        "name":"19A",
+        "type": "premium",
+        "source": "Saibaba Colony",
+        "destination": "Vellalore",
+        "routes": [
+          {"stage": "0", "place": "Saibaba Colony"},
+          {"stage": "1", "place": "North Coimbatore"},
+          {"stage": "2", "place": "Town Hall"},
+          {"stage": "3", "place": "Town"},
+          {"stage": "4", "place": "Podanur"},
+          {"stage": "5", "place": "Vellalore"}
+        ]
+      },
+      {
+        "name":"19C",
+        "type": "govt",
+        "source": "Gandhipuram",
+        "destination": "Sulur Airport",
+        "routes": [
+          {"stage": "0", "place": "Gandhipuram"},
+          {"stage": "1", "place": "Lakshmi Mill"},
+          {"stage": "2", "place": "Peelamedu"},
+          {"stage": "3", "place": "Kamaraj Road"},
+          {"stage": "4", "place": "Kangeyampalayam"},
+          {"stage": "5", "place": "Sulur Airport"}
+        ]
+      },
+      {
+        "name":"19D",
+        "type": "private",
+        "source": "Gandhipuram",
+        "destination": "Appanaickenpatti",
+        "routes": [
+          {"stage": "0", "place": "Gandhipuram"},
+          {"stage": "1", "place": "Peelamedu"},
+          {"stage": "2", "place": "Ondipu Sindhamanipudur"},
+          {"stage": "3", "place": "Kalangal"},
+          {"stage": "4", "place": "Appanaickenpatti"}
+        ]
+      },
+      {
+        "name":"19E",
+        "type": "premium",
+        "source": "Ukkadam",
+        "destination": "Appanaickenpatti",
+        "routes": [
+          {"stage": "0", "place": "Ukkadam"},
+          {"stage": "1", "place": "GH"},
+          {"stage": "2", "place": "Singanallur"},
+          {"stage": "3", "place": "Ondipudur"},
+          {"stage": "4", "place": "Sindhamanipudu"},
+          {"stage": "5", "place": "Appanaickenpatti"}
+        ]
+      },
+      {
+        "name":"19F",
+        "type": "govt",
+        "source": "Ukkadam",
+        "destination": "Madapur",
+        "routes": [
+          {"stage": "0", "place": "Ukkadam"},
+          {"stage": "1", "place": "Muthukavundanpudur"},
+          {"stage": "2", "place": "Madapur"}
+        ]
+      },
+      {
+        "name":"2",
+        "type": "private",
+        "source": "Perur",
+        "destination": "Cheran Managar",
+        "routes": [
+          {"stage": "0", "place": "Perur"},
+          {"stage": "1", "place": "Polytechnology"},
+          {"stage": "2", "place": "Selvapuram"},
+          {"stage": "3", "place": "Town Hall"},
+          {"stage": "4", "place": "Lakshmi Mills"},
+          {"stage": "5", "place": "Peelamedu"},
+          {"stage": "6", "place": "Cheran Manager"}
+        ]
+      },
+      {
+        "name":"20",
+        "type": "premium",
+        "source": "Kanuvai",
+        "destination": "Airport",
+        "routes": [
+          {"stage": "0", "place": "Kanuvai"},
+          {"stage": "1", "place": "Gandhipuram"},
+          {"stage": "2", "place": "P.N.Palayam"},
+          {"stage": "3", "place": "Peelamedu"},
+          {"stage": "4", "place": "Sitra"},
+          {"stage": "5", "place": "Airport"}
+        ]
+      },
+      {
+        "name":"20A",
+        "type": "govt",
+        "source": "Gandhipuram",
+        "destination": "Somanur",
+        "routes": [
+          {"stage": "0", "place": "Gandhipuram"},
+          {"stage": "1", "place": "Lakshmi Mill"},
+          {"stage": "2", "place": "Sitra"},
+          {"stage": "3", "place": "Chinniyampalayam"},
+          {"stage": "4", "place": "Karumathampatti"},
+          {"stage": "5", "place": "Somanur"}
+        ]
+      },
+      {
+        "name":"21",
+        "type": "private",
+        "source": "Gandhipuram",
+        "destination": "Kembanur",
+        "routes": [
+          {"stage": "0", "place": "Gandhipuram"},
+          {"stage": "1", "place": "Gandhipark"},
+          {"stage": "2", "place": "Poosaripalayam"},
+          {"stage": "3", "place": "Vedapatti"},
+          {"stage": "4", "place": "Kembanur"}
+        ]
+      },
+      {
+        "name":"21A",
+        "type": "govt",
+        "source": "Gandhipuram",
+        "destination": "Narasipuram",
+        "routes": [
+          {"stage": "0", "place": "Gandhipuram"},
+          {"stage": "1", "place": "Gandhipark"},
+          {"stage": "2", "place": "Vedapatti"},
+          {"stage": "3", "place": "Devarayapuram"},
+          {"stage": "4", "place": "Viraliur"},
+          {"stage": "5", "place": "Narasipuram"}
+        ]
+      },
+      {
+        "name":"21B",
+        "type": "private",
+        "source": "Town Hall",
+        "destination": "Devarayapuram",
+        "routes": [
+          {"stage": "0", "place": "Town Hall"},
+          {"stage": "1", "place": "Gandhipark"},
+          {"stage": "2", "place": "Vedapatti"},
+          {"stage": "3", "place": "Poochiyur"},
+          {"stage": "4", "place": "Kembanur"},
+          {"stage": "5", "place": "Devarayapuram"}
+        ]
+      },
+      {
+        "name":"22",
+        "type": "premium",
+        "source": "Sowripalayam",
+        "destination": "Sugarcane Institute",
+        "routes": [
+          {"stage": "0", "place": "Sowripalayam"},
+          {"stage": "1", "place": "GH"},
+          {"stage": "2", "place": "Agri University"},
+          {"stage": "3", "place": "Seeranaickenpalayam"},
+          {"stage": "4", "place": "Sugarcane Institute"}
+        ]
+      },
+      {
+        "name":"22A",
+        "type": "govt",
+        "source": "Maruthamalai",
+        "destination": "Chinniyampalayam",
+        "routes": [
+          {"stage": "0", "place": "Maruthamalai"},
+          {"stage": "1", "place": "Sowripalayam"},
+          {"stage": "2", "place": "Gandhipuram"},
+          {"stage": "3", "place": "K.G. Hospital"},
+          {"stage": "4", "place": "Pangaja Mill Road"},
+          {"stage": "5", "place": "Saibaba Colony"},
+          {"stage": "6", "place": "KMCH"},
+          {"stage": "7", "place": "Chinniyampalayam"}
+        ]
+      },
+      {
+        "name":"23A",
+        "type": "private",
+        "source": "Podanur",
+        "destination": "Varadharajapuram",
+        "routes": [
+          {"stage": "0", "place": "Podanur"},
+          {"stage": "1", "place": "Ukkadam"},
+          {"stage": "2", "place": "GH"},
+          {"stage": "3", "place": "Puliyakulam"},
+          {"stage": "4", "place": "Sowripalayam"},
+          {"stage": "5", "place": "Varadharajapuram"}
+        ]
+      }
+]
+  
+  

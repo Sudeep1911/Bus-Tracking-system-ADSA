@@ -1,0 +1,32 @@
+.location-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px; /* Adjust the gap between items */
+    margin: 10px;
+    justify-content: center;
+  }
+  
+  .location-item {
+    padding: 10px;
+    background-color: #3431e2;
+    border-radius: 10px;
+    color: white;
+    border-color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+  }
+  
+  .location-item:hover {
+    background-color: #e0e0e0;
+    color: black; /* Change background color on hover */
+  }
+  #popuploc{
+    top: 50%;
+    left: 50%;
+    width: 800px;
+    max-height: 600px;
+  }
+  #popup-contentloc{
+    width: 100%;
+    height: 100%;
+  }

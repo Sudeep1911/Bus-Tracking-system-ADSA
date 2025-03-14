@@ -1,0 +1,92 @@
+.App {
+  text-align: center;
+}
+
+.container-lg {
+  max-width: 1280px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+.contents{
+  display: flex;
+}
+.app-bar {
+  background-color: #888282;
+  padding: 10px 0;
+}
+.locations{
+  margin: 30px;
+}
+.heading {
+  margin: 0;
+}
+
+.grow-in {
+  transition: all 0.5s;
+}
+
+.container {
+  padding: 20px;
+}
+
+.grid-container {
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.grid-item {
+  flex: 0 0 auto;
+}
+.bus-names{
+  width: 400px;/* Adjust the margin size as needed */
+  background-color: #c5c4c4;
+}
+#bus-names{
+  width: 550px;
+}
+@media (max-width: 600px) {
+  .grid-item {
+    width: 100%;
+  }
+}
+#location-names{
+  width: 600px;
+}
+.header {
+  display: flex;
+  position: relative;
+  background-color: #e4e5a6; 
+  color: rgb(0, 0, 0); 
+  height: 100px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.title {
+  margin: 0;
+  flex-grow: 1; /* Allow the title to grow and take up available space */
+}
+
+.admin-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.admin-button:hover {
+  background-color: #45a049;
+}
+.left-container,
+.right-container {
+  width: 100px; /* Adjust width as needed */
+  height: 100px; /* Adjust height as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,69 @@
+/* Style for container */
+.select-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 1rem; /* Gap between columns */
+  }
+  
+  /* Style for select labels */
+  .select-label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  /* Style for select inputs */
+  .select-input {
+    width: 100%; /* Fill the entire width of the column */
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Style for options */
+  .select-option {
+    font-size: 16px;
+  }
+  .select-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Align items horizontally */
+  }
+  
+  .submit-button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 300px;
+  }
+  
+  .submit-button:hover {
+    background-color: #45a049; /* Darker green */
+  }
+
+  .select-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .select-input {
+    width: calc(50%); /* Adjust the width of select inputs */
+  }
+  
+  .button {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+
+  }
+  
+  

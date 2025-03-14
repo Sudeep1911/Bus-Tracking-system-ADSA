@@ -1,0 +1,129 @@
+.bus-table-container {
+    margin-top: 20px;
+    width: 800px;
+  }
+  
+  .bus-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  }
+  
+  .bus-table th,
+  .bus-table td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .bus-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .bus-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .bus-table tbody tr:hover {
+    background-color: #ddd;
+  }
+  /* Style for container */
+.select-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 1rem; /* Gap between columns */
+}
+
+/* Style for select labels */
+.select-label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+/* Style for select inputs */
+.select-input {
+  width: 100%; /* Fill the entire width of the column */
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Style for options */
+.select-option {
+  font-size: 16px;
+}
+.select-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Align items horizontally */
+}
+
+.submit-button ,.clear-button,.exchange-button{
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 150px;
+}
+.submit-button{
+  background-color: #4CAF50; /* Green */
+}
+.clear-button{
+  background-color: #ac2e2e; /* Green */
+}
+.exchange-button{
+  background-color: #2e3bac;
+}
+.submit-button:hover {
+  background-color: #45a049; /* Darker green */
+}
+.clear-button:hover{
+  background-color: #8b2626;
+}
+.exchange-button:hover{
+  background-color: #222c81;
+}
+.select-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.select-input {
+  width: calc(50%); /* Adjust the width of select inputs */
+}
+
+.button {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+
+}
+
+.filter-container {
+  margin-bottom: 20px;
+}
+
+/* Filter button */
+.filter-container button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Active filter button */
+.filter-container button.active {
+  background-color: #355b85;
+  color: #fff;
+}
