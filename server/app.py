@@ -6,7 +6,7 @@ from routes.bus_routes import bus_routes  # Import the buses routes
 app = Flask(__name__)
 
 # Apply CORS middleware
-CORS(app, resources={r"/buses/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": ["http://localhost:3000"]}}, supports_credentials=True)
 
 # Use Blueprint for routes
 app.register_blueprint(bus_routes, url_prefix='/buses')

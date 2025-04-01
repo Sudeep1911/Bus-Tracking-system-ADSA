@@ -35,3 +35,42 @@ def insert_bus_data():
         client.close()
 
 
+def merge_sort(buses, sort):
+    """Sort the buses using merge sort based on the given sort criteria."""
+    if len(buses) <= 1:
+        return buses
+    
+    mid = len(buses) // 2
+    left = merge_sort(buses[:mid], sort)
+    right = merge_sort(buses[mid:], sort)
+
+    return merge(left, right, sort)
+
+def merge(left, right, sort):
+    """Merge function for merge sort."""
+    result = []
+    i = j = 0
+    
+    while i < len(left) and j < len(right):
+        if sort == "stops":
+            # Sort by fareIndex (number of stops)
+            if left[i]["fareIndex"] < right[j]["fareIndex"]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+        elif sort == "fare":
+            # Sort by fare
+            if left[i]["fare"] < right[j]["fare"]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+    
+    # Append remaining elements
+    result.extend(left[i:])
+    result.extend(right[j:])
+    
+    return result
