@@ -24,7 +24,7 @@ function App() {
       </div>
       <div className="contents">
         <div className="bus-names" id="bus-names">
-          <Busnames />
+          <Busnames allPlaces={allPlaces} />
         </div>
         <div className="container-lg">
           <br />
@@ -45,6 +45,7 @@ function App() {
         <div className="bus-names" id="location-names">
           <Locations
             allPlaces={allPlaces}
+            setAllPlaces={setAllPlaces}
             error={error}
             loading={loading}
             setLoading={setLoading}

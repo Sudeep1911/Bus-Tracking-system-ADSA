@@ -1,32 +1,108 @@
 .location-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px; /* Adjust the gap between items */
-    margin: 10px;
-    justify-content: center;
-  }
-  
-  .location-item {
-    padding: 10px;
-    background-color: #3431e2;
-    border-radius: 10px;
-    color: white;
-    border-color: black;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition on hover */
-  }
-  
-  .location-item:hover {
-    background-color: #e0e0e0;
-    color: black; /* Change background color on hover */
-  }
-  #popuploc{
-    top: 50%;
-    left: 50%;
-    width: 800px;
-    max-height: 600px;
-  }
-  #popup-contentloc{
-    width: 100%;
-    height: 100%;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px; /* Adjust the gap between items */
+  margin: 10px;
+  justify-content: center;
+}
+
+.location-item {
+  padding: 10px;
+  background-color: #3431e2;
+  border-radius: 10px;
+  color: white;
+  border-color: black;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.location-item:hover {
+  background-color: #e0e0e0;
+  color: black; /* Change background color on hover */
+}
+/* Popup Container */
+#popuploc {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  max-width: 800px;
+  max-height: fit-content;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Close Button */
+#popuploc .close {
+  position: absolute;
+  font-size: 24px;
+  font-weight: bold;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+#popuploc .close:hover {
+  color: #ff5555;
+}
+
+/* Bus Table Styling */
+.bus-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.bus-table th,
+.bus-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.bus-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.bus-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.add-place-btn {
+  background-color: #007bff;
+  color: white;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-place-btn button:hover {
+  background-color: #0056b3;
+}
+
+.location-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+  margin-bottom: 20px;
+}
+
+.location-list-container {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+}

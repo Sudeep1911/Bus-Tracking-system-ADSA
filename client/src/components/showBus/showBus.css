@@ -180,3 +180,47 @@
   gap: 5px;
   justify-content: center;
 }
+
+.no-bus-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.no-bus-text {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.mst-button,
+.graph-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.mst-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.mst-button:hover {
+  background-color: #0056b3;
+}
+
+.graph-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.graph-button:hover {
+  background-color: #1e7e34;
+}

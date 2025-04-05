@@ -9,6 +9,7 @@ const ShowBus = ({ source, destination }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [filterType, setFilterType] = useState("all"); // State for filter type
   const [sortBy, setSortBy] = useState("all");
+  const [graphOrMst, setGraphOrMst] = useState(false);
 
   useEffect(() => {
     const fetchBusData = async () => {
@@ -23,6 +24,8 @@ const ShowBus = ({ source, destination }) => {
           }
         );
         setBusList(response.data);
+        setGraphOrMst(false);
+        setError(false);
         setLoading(false); // Data has been successfully retrieved
       } catch (error) {
         console.error("Error fetching bus data:", error);
@@ -73,43 +76,100 @@ const ShowBus = ({ source, destination }) => {
       return { ...bus, arrivalTime };
     });
 
+  const handleMST = async () => {
+    // logic to open/show MST visualization
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/buses/mst`,
+        { source: source, destination: destination }, // Data payload
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setBusList(response.data.segments);
+      setGraphOrMst(true);
+      setLoading(false); // Data has been successfully retrieved
+    } catch (error) {
+      console.error("Error fetching bus data:", error);
+      setError(error); // Set the error state
+      setLoading(false); // Data retrieval failed
+    }
+  };
+
+  const handleGraph = async () => {
+    // logic to open/show full graph
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/buses/graph`,
+        { source: source, destination: destination }, // Data payload
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setBusList(response.data);
+      setGraphOrMst(true);
+      setLoading(false); // Data has been successfully retrieved
+    } catch (error) {
+      console.error("Error fetching bus data:", error);
+      setError(error); // Set the error state
+      setLoading(false); // Data retrieval failed
+    }
+  };
+
   // Data loaded successfully, render the table
   return (
     <div className="bus-table-container">
       <h2>Bus Schedules</h2>
 
       {/* Filter buttons */}
-      <div className="filter-and-sort">
-        <div className="filter-container">
-          <label htmlFor="bus-filter">Filter: </label>
-          <select
-            id="bus-filter"
-            value={filterType}
-            onChange={(e) => setFilterType(e.target.value)}
-          >
-            <option value="all">All</option>
-            <option value="govt">Government</option>
-            <option value="private">Private</option>
-            <option value="premium">Premium</option>
-          </select>
-        </div>
-        <div className="sort-container">
-          <label htmlFor="sort-filter">Sort by:</label>
-          <select
-            id="sort-filter"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <option value="all">All</option>
-            <option value="stops">No of Stops</option>
-            <option value="fare">Fare</option>
-          </select>
-        </div>
-      </div>
+      {filteredBusList.length !== 0 ||
+        (!graphOrMst && (
+          <div className="filter-and-sort">
+            <div className="filter-container">
+              <label htmlFor="bus-filter">Filter: </label>
+              <select
+                id="bus-filter"
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+              >
+                <option value="all">All</option>
+                <option value="govt">Government</option>
+                <option value="private">Private</option>
+                <option value="premium">Premium</option>
+              </select>
+            </div>
+            <div className="sort-container">
+              <label htmlFor="sort-filter">Sort by:</label>
+              <select
+                id="sort-filter"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="all">All</option>
+                <option value="stops">No of Stops</option>
+                <option value="fare">Fare</option>
+              </select>
+            </div>
+          </div>
+        ))}
 
       {filteredBusList.length === 0 ? (
-        <div className="no-bus-alert">
-          No buses are running on this current route.
+        <div className="no-bus-container">
+          <p className="no-bus-text">
+            No buses are running on this current route.
+          </p>
+          <div className="button-container">
+            <button className="mst-button" onClick={handleMST}>
+              View MST
+            </button>
+            <button className="graph-button" onClick={handleGraph}>
+              View Graph
+            </button>
+          </div>
         </div>
       ) : (
         <table className="bus-table">

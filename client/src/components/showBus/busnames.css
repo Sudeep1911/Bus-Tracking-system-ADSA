@@ -1,87 +1,258 @@
-
+/* Container Styles */
 .bus-list-container {
-    width: 100%;
-    margin: 0 auto;
-    height: 100%  ;
-  }
-  
-  .bus-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .bus-box {
-    width:20px; /* Adjust the width as needed */
-    margin: 10px;
-    padding: 20px;
-    background-color: #a810ee;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s;
-    cursor: pointer;
-  }
-  
-  .bus-box p {
-    margin: 0;
-    font-size: 16px;
-    color: #ffffff;
-  }
-  .bus-box:hover {
-    background-color: #e0e0e0;
-    p{color: black;}
-  }
-  .popup {
-    position: fixed;
-    display: flex;
-    top: 81%;
-    left: 11%;
-    text-align: left;
-    width:450px;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    justify-content: center;
-  }
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+}
 
-  .popup-content {
-    padding: 20px;
-  }
+/* Header Styles */
+.bus-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+  margin-bottom: 20px;
+}
 
-  .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 20px;
-    color: #888;
-  }
+.bus-header h2 {
+  font-size: 1.8rem;
+  color: #333;
+}
 
-  .close:hover {
-    color: #f00;
-  }
+.bus-header button {
+  background-color: #007bff;
+  color: white;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-  .popup h2 {
-    margin-top: 0;
-    color: #333;
-  }
+.bus-header button:hover {
+  background-color: #0056b3;
+}
 
-  .popup p {
-    margin: 10px 0;
-    color: #666;
-  }
+/* Bus List */
+.bus-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 15px;
+}
 
-  .popup ul {
-    list-style-type: none;
-    padding: 0;
-  }
+.bus-box {
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-  .popup ul li {
-    margin-bottom: 5px;
-  }
+.bus-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .popup ul li:last-child {
-    margin-bottom: 0;
-  } 
+/* Popup Content */
+.popup-content {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 350px;
+  max-width: 90%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+.popup-content h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.popup-content p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #444;
+}
+
+/* Correcting the Route List */
+.popup-content ul {
+  list-style-type: none; /* Removes default bullet points */
+  padding: 0;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.popup-content ul li {
+  font-size: 1rem;
+  padding: 5px 0;
+  position: relative;
+  padding-left: 20px;
+}
+
+/* Close Button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #555;
+}
+
+.close:hover {
+  color: #000;
+}
+/* General Popup Styles (Common Overlay) */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* 🚌 Bus Details Popup */
+.bus-details-popup {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 350px;
+  max-width: 90%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+.bus-details-popup h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.bus-details-popup p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #444;
+}
+
+/* Routes List */
+.routes-list {
+  list-style-type: none;
+  padding: 0;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.routes-list li {
+  font-size: 1rem;
+  padding: 5px 0;
+  position: relative;
+  padding-left: 20px;
+}
+
+/* Custom Bullet Point */
+.routes-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #000;
+  font-weight: bold;
+}
+
+/* ➕ Add Bus Popup */
+.add-bus-popup {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 95%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  position: relative;
+}
+
+.add-bus-popup h2 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.add-bus-popup select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-bus-popup input {
+  width: 95%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #555;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+.routes-list {
+  list-style: none;
+  padding: 0;
+}
+
+.stop-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f3f3f3;
+  padding: 5px 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+.remove-stop-btn {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.remove-stop-btn:hover {
+  color: darkred;
+}

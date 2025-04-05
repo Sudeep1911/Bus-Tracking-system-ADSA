@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from controllers.buses import get_buses, locations,get_place, post_bus,post_place,get_bus_by_location_id
+from controllers.buses import get_buses, locations,get_place, post_bus,post_place,get_bus_by_location_id,create_graph,create_mst
 from flask_cors import cross_origin
 # Create a Blueprint for bus routes
 bus_routes = Blueprint('bus_routes', __name__)
@@ -41,3 +41,20 @@ def addBus():
 def addPlace():
     data=request.json
     return post_place(data)
+@bus_routes.route('/graph',methods=['POST'])
+def createGraph():
+    data=request.json
+    source = data.get("source")
+    destination = data.get("destination")   
+    return create_graph(source, destination)
+    
+@bus_routes.route('/mst',methods=['POST'])
+def createMST():
+    data=request.json
+    source = data.get("source")
+    destination = data.get("destination")  
+    result, total_fare = create_mst(source, destination)
+    return jsonify({
+        "segments": result,
+        "totalFare": total_fare
+    }), 200
