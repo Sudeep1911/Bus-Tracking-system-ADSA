@@ -164,6 +164,26 @@ def post_place(data):
     except Exception as error:
         return jsonify({"message": str(error)}), 400
 
+def merge_consecutive_routes(routes):
+    if not routes:
+        return []
+
+    merged = [routes[0]]
+
+    for i in range(1, len(routes)):
+        prev = merged[-1]
+        current = routes[i]
+
+        # If same bus and continuous stops
+        if current['name'] == prev['name'] and current['source'] == prev['destination']:
+            # Just update the destination and fare (accumulate)
+            prev['destination'] = current['destination']
+            prev['fare'] += current['fare']
+        else:
+            merged.append(current)
+
+    return merged
+        
 def create_graph(source_id, destination_id):
     class MultiBusRouteGraph:
         def __init__(self):
@@ -181,8 +201,8 @@ def create_graph(source_id, destination_id):
 
                 self.bus_routes[bus_name] = stop_ids
 
-                for i in range(len(route)):
-                    self.stop_names[route[i]["id"]] = route[i]["place"]
+                for stop in route:
+                    self.stop_names[stop["id"]] = stop["place"]
 
                 for i in range(len(route) - 1):
                     stop1_id = route[i]["id"]
@@ -191,15 +211,12 @@ def create_graph(source_id, destination_id):
                     self.graph.setdefault(stop1_id, []).append((stop2_id, bus_name, 1))
                     self.graph.setdefault(stop2_id, []).append((stop1_id, bus_name, 1))
 
-                    # Store metadata for fare calculation
                     self.bus_info[(stop1_id, stop2_id, bus_name)] = {
-
                         "type": bus_type,
                         "name": bus_name,
                         "route": stop_ids
                     }
                     self.bus_info[(stop2_id, stop1_id, bus_name)] = {
-
                         "type": bus_type,
                         "name": bus_name,
                         "route": stop_ids
@@ -207,12 +224,18 @@ def create_graph(source_id, destination_id):
 
         def find_shortest_path(self, source_id, destination_id):
             if source_id not in self.graph or destination_id not in self.graph:
-                return []
+                return {
+                    "nodes": [],
+                    "edges": [],
+                    "highlightedPath": [],
+                    "segments": []
+                }
 
             counter = itertools.count()
             pq = [(0, next(counter), source_id, [], None)]
-
             visited = {}
+
+            path_to_highlight = []
 
             while pq:
                 dist, _, node, path, last_bus = heapq.heappop(pq)
@@ -224,59 +247,119 @@ def create_graph(source_id, destination_id):
                 path = path + [(node, last_bus)]
 
                 if node == destination_id:
-                    result = []
-                    for i in range(1, len(path)):
-                        start, _ = path[i - 1]
-                        end, bus_name = path[i]
-
-                        info = self.bus_info.get((start, end, bus_name))
-                        if not info:
-                            continue
-
-                        route = info["route"]
-                        try:
-                            start_index = route.index(start)
-                            end_index = route.index(end)
-                        except ValueError:
-                            start_index = end_index = 0
-
-                        fare_index = abs(end_index - start_index)
-                        fare_array =[4, 7, 9, 11, 12, 12, 13, 14, 15, 15, 15, 16, 16, 16, 16]
-                        fare = fare_array[fare_index-1] if fare_index < len(fare_array) else (fare_array[-1] if fare_array else 0)
-
-                        if info.get("type") == "premium":
-                            fare *= 2
-
-                        segment = {
-                            "name": info["name"],
-                            "type": info["type"],
-                            "source": self.stop_names[start],
-                            "destination": self.stop_names[end],
-                            "fare": fare,
-                            "fareIndex": fare_index
-                        }
-                        result.append(segment)
-
-                    return result
+                    path_to_highlight = path
+                    break
 
                 for neighbor, bus, weight in self.graph.get(node, []):
                     transfer_penalty = 1 if last_bus and bus != last_bus else 0
                     heapq.heappush(pq, (dist + weight + transfer_penalty, next(counter), neighbor, path, bus))
 
-            return []
+            # Build segments from path
+            segments = []
+            for i in range(1, len(path_to_highlight)):
+                start, _ = path_to_highlight[i - 1]
+                end, bus_name = path_to_highlight[i]
+                info = self.bus_info.get((start, end, bus_name))
+                if not info:
+                    continue
 
-    # 1. Fetch all bus data
+                route = info["route"]
+                try:
+                    start_index = route.index(start)
+                    end_index = route.index(end)
+                except ValueError:
+                    start_index = end_index = 0
+
+                fare_index = abs(end_index - start_index)
+                fare_array = [4, 7, 9, 11, 12, 12, 13, 14, 15, 15, 15, 16, 16, 16, 16]
+                fare = fare_array[fare_index - 1] if fare_index < len(fare_array) else (fare_array[-1] if fare_array else 0)
+
+                if info.get("type") == "premium":
+                    fare *= 2
+
+                segments.append({
+                    "name": info["name"],
+                    "type": info["type"],
+                    "source": self.stop_names[start],
+                    "destination": self.stop_names[end],
+                    "fare": fare,
+                    "fareIndex": fare_index
+                })
+
+            # Nodes (bus stops)
+            nodes = [
+                {"id": place_name, "label": place_name}
+                for stop_id, place_name in self.stop_names.items()
+            ]
+
+            # Edges (bus route connections)
+            edges = []
+            added_edges = set()
+            for (stop1, stop2, bus), info in self.bus_info.items():
+                if (stop1, stop2, bus) in added_edges:
+                    continue
+                added_edges.add((stop1, stop2, bus))
+                added_edges.add((stop2, stop1, bus))  # avoid reverse duplicates
+
+                route = info["route"]
+                try:
+                    idx1 = route.index(stop1)
+                    idx2 = route.index(stop2)
+                    fare_index = abs(idx1 - idx2)
+                except ValueError:
+                    fare_index = 1
+
+                fare_array = [4, 7, 9, 11, 12, 12, 13, 14, 15, 15, 15, 16, 16, 16, 16]
+                fare = fare_array[fare_index - 1] if fare_index < len(fare_array) else (fare_array[-1] if fare_array else 0)
+                if info["type"] == "premium":
+                    fare *= 2
+
+                source_name = self.stop_names[stop1]
+                target_name = self.stop_names[stop2]
+
+                edges.append({
+                    "id": f"{source_name}-{target_name}-{bus}",
+                    "source": source_name,
+                    "target": target_name,
+                    "label": f"{bus} (₹{fare})",
+                    "bus": bus,
+                    "fare": fare,
+                    "type": info["type"]
+                })
+
+            # Highlighted path
+            highlighted_edges = []
+            for i in range(1, len(path_to_highlight)):
+                start, _ = path_to_highlight[i - 1]
+                end, bus_name = path_to_highlight[i]
+                start_name = self.stop_names[start]
+                end_name = self.stop_names[end]
+                highlighted_edges.append(f"{start_name}-{end_name}-{bus_name}")
+            print(f"MST has {len(nodes)} nodes and {len(edges)} edges.")
+            return {
+                "nodes": nodes,
+                "edges": edges,
+                "highlightedPath": highlighted_edges,
+                "segments": segments
+            }
+
+    # Step 1: Fetch all buses
     collection = database[COLLECTION_NAME]
     bus_data = list(collection.find({}, {"_id": 0}))
 
-    # 2. Create and build the graph
+    # Step 2: Build graph
     graph = MultiBusRouteGraph()
     graph.add_bus_routes(bus_data)
 
-    # 3. Get optimal path
+    # Step 3: Return full graph with highlighted route
     return graph.find_shortest_path(source_id, destination_id)
 
+
+
 def create_mst(source_id, destination_id):
+    import heapq
+    import itertools
+
     class MSTGraph:
         def __init__(self):
             self.graph = {}  # stop_id -> list of (neighbor_id, bus_name)
@@ -328,8 +411,9 @@ def create_mst(source_id, destination_id):
         def build_mst(self, source_id):
             visited = set()
             parent_map = {}
+            mst_edges = []
+            counter = itertools.count()
             min_heap = []
-            counter = itertools.count()  # Initialize ONCE here
 
             visited.add(source_id)
             for neighbor, bus_name in self.graph.get(source_id, []):
@@ -338,12 +422,12 @@ def create_mst(source_id, destination_id):
                     heapq.heappush(min_heap, (fare, next(counter), source_id, neighbor, bus_name, fare_index))
 
             while min_heap:
-                fare, _, u, v, bus, fare_index = heapq.heappop(min_heap)
+                fare, _, u, v, bus_name, fare_index = heapq.heappop(min_heap)
                 if v in visited:
                     continue
-
                 visited.add(v)
-                parent_map[v] = (u, bus, fare, fare_index)
+                parent_map[v] = (u, bus_name, fare, fare_index)
+                mst_edges.append((u, v, bus_name, fare, fare_index))
 
                 for neighbor, next_bus in self.graph.get(v, []):
                     if neighbor in visited:
@@ -352,7 +436,7 @@ def create_mst(source_id, destination_id):
                     if nf is not None:
                         heapq.heappush(min_heap, (nf, next(counter), v, neighbor, next_bus, nf_index))
 
-            return parent_map
+            return parent_map, mst_edges
 
         def reconstruct_path(self, parent_map, source_id, destination_id):
             path = []
@@ -361,7 +445,7 @@ def create_mst(source_id, destination_id):
 
             while current != source_id:
                 if current not in parent_map:
-                    return [], 0  # No path found
+                    return [], 0  # No path
 
                 u, bus, fare, fare_index = parent_map[current]
                 info = self.bus_info.get((u, current, bus))
@@ -382,14 +466,58 @@ def create_mst(source_id, destination_id):
 
             return path[::-1], total_fare
 
-    # 1. Load data
+        def generate_nodes_and_edges(self, mst_edges):
+            seen = set()
+            nodes = []
+            edges = []
+
+            for u, v, bus_name, fare, fare_index in mst_edges:
+                source_name = self.stop_names.get(u, str(u))
+                target_name = self.stop_names.get(v, str(v))
+
+                if source_name not in seen:
+                    seen.add(source_name)
+                    nodes.append({
+                        "id": source_name,
+                        "label": source_name
+                    })
+
+                if target_name not in seen:
+                    seen.add(target_name)
+                    nodes.append({
+                        "id": target_name,
+                        "label": target_name
+                    })
+
+                info = self.bus_info.get((u, v, bus_name)) or self.bus_info.get((v, u, bus_name))
+
+                edges.append({
+                    "id": f"{source_name}-{target_name}-{bus_name}",
+                    "source": source_name,
+                    "target": target_name,
+                    "label": f"{bus_name} (₹{fare})",
+                    "bus": bus_name,
+                    "fare": fare,
+                    "type": info["type"] if info else "normal"
+                })
+
+            return nodes, edges
+
+
+    # Load data from DB
     collection = database[COLLECTION_NAME]
     bus_data = list(collection.find({}, {"_id": 0}))
 
-    # 2. Create MST
+    # Build and compute MST
     graph = MSTGraph()
     graph.add_bus_data(bus_data)
-    parent_map = graph.build_mst(source_id)
-
-    # 3. Reconstruct path
-    return graph.reconstruct_path(parent_map, source_id, destination_id)
+    parent_map, mst_edges = graph.build_mst(source_id)
+    segments, total_fare = graph.reconstruct_path(parent_map, source_id, destination_id)
+    nodes, edges = graph.generate_nodes_and_edges(mst_edges)
+    data=merge_consecutive_routes(segments)
+    return {
+        "nodes": nodes,
+        "edges": edges,
+        "segments": data,
+        "totalFare": total_fare
+    }

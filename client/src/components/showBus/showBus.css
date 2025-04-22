@@ -211,6 +211,13 @@
   background-color: #007bff;
   color: white;
 }
+.graph-container {
+  height: 75vh;
+  border: 1px solid #ccc; /* You can adjust this to match your design */
+  border-radius: 8px; /* Rounded corners */
+  padding: 0.5rem; /* Equivalent to Tailwind's p-2 (8px) */
+  box-sizing: border-box;
+}
 
 .mst-button:hover {
   background-color: #0056b3;

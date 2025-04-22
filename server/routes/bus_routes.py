@@ -53,8 +53,5 @@ def createMST():
     data=request.json
     source = data.get("source")
     destination = data.get("destination")  
-    result, total_fare = create_mst(source, destination)
-    return jsonify({
-        "segments": result,
-        "totalFare": total_fare
-    }), 200
+    result=create_mst(source, destination)
+    return jsonify(result)

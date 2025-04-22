@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./showBus.css"; // Import the CSS file
+import ReactFlow, { Background, Controls } from "reactflow";
+import "reactflow/dist/style.css";
 
 const ShowBus = ({ source, destination }) => {
   const [busList, setBusList] = useState([]);
@@ -10,6 +12,7 @@ const ShowBus = ({ source, destination }) => {
   const [filterType, setFilterType] = useState("all"); // State for filter type
   const [sortBy, setSortBy] = useState("all");
   const [graphOrMst, setGraphOrMst] = useState(false);
+  const [totalFare, setTotalFare] = useState(0);
 
   useEffect(() => {
     const fetchBusData = async () => {
@@ -77,24 +80,32 @@ const ShowBus = ({ source, destination }) => {
     });
 
   const handleMST = async () => {
-    // logic to open/show MST visualization
     try {
+      setLoading(true); // Set loading before starting the request
       const response = await axios.post(
         `http://localhost:5000/buses/mst`,
-        { source: source, destination: destination }, // Data payload
+        { source: source, destination: destination },
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      setBusList(response.data.segments);
-      setGraphOrMst(true);
-      setLoading(false); // Data has been successfully retrieved
+
+      const { segments } = response.data;
+      const totalFare = segments.reduce(
+        (sum, segment) => sum + segment.fare,
+        0
+      );
+      setTotalFare(totalFare);
+      setBusList(segments); // Set highlighted path (segments)
+      setGraphOrMst(true); // Show MST view
+      setError(null); // Clear any previous error
     } catch (error) {
-      console.error("Error fetching bus data:", error);
-      setError(error); // Set the error state
-      setLoading(false); // Data retrieval failed
+      console.error("Error fetching MST data:", error);
+      setError(error);
+    } finally {
+      setLoading(false); // Always stop loading after request
     }
   };
 
@@ -110,7 +121,13 @@ const ShowBus = ({ source, destination }) => {
           },
         }
       );
-      setBusList(response.data);
+      const { segments } = response.data;
+      const totalFare = segments.reduce(
+        (sum, segment) => sum + segment.fare,
+        0
+      );
+      setTotalFare(totalFare);
+      setBusList(segments); // Show fare segments
       setGraphOrMst(true);
       setLoading(false); // Data has been successfully retrieved
     } catch (error) {
@@ -157,11 +174,13 @@ const ShowBus = ({ source, destination }) => {
           </div>
         ))}
 
-      {filteredBusList.length === 0 ? (
+      {filteredBusList.length === 0 && (
+        <p className="no-bus-text">
+          No buses are running on this current route.
+        </p>
+      )}
+      {(filteredBusList.length === 0 || graphOrMst) && (
         <div className="no-bus-container">
-          <p className="no-bus-text">
-            No buses are running on this current route.
-          </p>
           <div className="button-container">
             <button className="mst-button" onClick={handleMST}>
               View MST
@@ -171,33 +190,42 @@ const ShowBus = ({ source, destination }) => {
             </button>
           </div>
         </div>
-      ) : (
-        <table className="bus-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Source</th>
-              <th>Destination</th>
-              <th>Fare</th>
-              <th>Arrival Time</th>
-              <th>No Of Stops</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredBusList.map((bus, index) => (
-              <tr key={index}>
-                <td>{bus.name}</td>
-                <td>{bus.type}</td>
-                <td>{bus.source}</td>
-                <td>{bus.destination}</td>
-                <td>{bus.fare}</td>
-                <td>{bus.arrivalTime.toLocaleTimeString()}</td>
-                <td>{bus.fareIndex}</td>
+      )}
+      {filteredBusList.length !== 0 && (
+        <>
+          <table className="bus-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Source</th>
+                <th>Destination</th>
+                <th>Fare</th>
+                <th>Arrival Time</th>
+                <th>No Of Stops</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredBusList.map((bus, index) => (
+                <tr key={index}>
+                  <td>{bus.name}</td>
+                  <td>{bus.type}</td>
+                  <td>{bus.source}</td>
+                  <td>{bus.destination}</td>
+                  <td>{bus.fare}</td>
+                  <td>{bus.arrivalTime.toLocaleTimeString()}</td>
+                  <td>{bus.fareIndex}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {graphOrMst && (
+            <>
+              <p>Total Fare:{totalFare}</p>
+              <p>Total Changes:{filteredBusList.length}</p>
+            </>
+          )}
+        </>
       )}
     </div>
   );
