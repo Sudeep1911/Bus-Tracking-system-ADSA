@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from controllers.buses import get_buses, locations,get_place, post_bus,post_place,get_bus_by_location_id,create_graph,create_mst
+from controllers.buses import get_buses, locations,get_place, post_bus,post_place,get_bus_by_location_id,create_graph,create_mst,put_bus,deletes_bus
 from flask_cors import cross_origin
 # Create a Blueprint for bus routes
 bus_routes = Blueprint('bus_routes', __name__)
@@ -37,6 +37,20 @@ def addBus():
     data=request.json
     return post_bus(data)
 
+@bus_routes.route('/updateBus',methods=['POST','OPTIONS'])
+def updateBus():
+    if request.method == 'OPTIONS':
+        return '', 200  # CORS preflight success
+
+    data = request.get_json()  # Only call this on actual POST
+    bus_id = data.get("busId")
+    bus_data = data.get("data")
+    return put_bus(bus_data,bus_id)
+
+@bus_routes.route('/<bus_id>', methods=['DELETE'])
+def delete_bus(bus_id):
+    return deletes_bus(bus_id)
+    
 @bus_routes.route('/addPlace',methods=['POST'])
 def addPlace():
     data=request.json

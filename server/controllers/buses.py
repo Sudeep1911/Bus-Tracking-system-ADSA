@@ -136,7 +136,59 @@ def post_bus(data):
     except Exception as error:
         return jsonify({"message":str(error)}),400
 
+def put_bus(data,bus_id):
+    try:
+        collection = database[COLLECTION_NAME]
 
+
+        # Extract and validate data
+        name = data.get("name")
+        type_ = data.get("type")
+        source_id = data.get("sourceId")
+        destination_id = data.get("destinationId")
+        source = data.get("source")
+        destination = data.get("destination")
+        routes = data.get("routes", [])
+
+        if not all([name, type_, source_id, destination_id, source, destination, isinstance(routes, list)]):
+            return jsonify({"message": "Missing or invalid required fields"}), 400
+
+        for route in routes:
+            if not isinstance(route, dict) or "place" not in route or "stage" not in route or "id" not in route:
+                return jsonify({"message": "Invalid route structure"}), 400
+
+        # Prepare update payload
+        update_data = {
+            "name": name,
+            "type": type_,
+            "sourceId": source_id,
+            "destinationId": destination_id,
+            "source": source,
+            "destination": destination,
+            "routes": routes
+        }
+
+        result = collection.update_one(
+            {"name": bus_id},
+            {"$set": update_data}
+        )
+
+        if result.matched_count == 0:
+            return jsonify({"message": "Bus not found"}), 404
+
+        return jsonify({"message": "Bus updated successfully"}), 200
+
+    except Exception as error:
+        return jsonify({"message": str(error)}), 400
+    
+def deletes_bus(bus_id):
+    collection = database[COLLECTION_NAME]
+    result = collection.delete_one({'name': bus_id})
+    if result.deleted_count == 1:
+        return jsonify({"message": "Bus deleted"}), 200
+    else:
+        return jsonify({"message": "Bus not found"}), 404
+    
 def generate_hash(value):
     """Generate a SHA-256 hash of a given string value."""
     return hashlib.sha256(value.encode()).hexdigest()
@@ -167,6 +219,7 @@ def post_place(data):
 def merge_consecutive_routes(routes):
     if not routes:
         return []
+    print(routes)
 
     merged = [routes[0]]
 
@@ -179,6 +232,7 @@ def merge_consecutive_routes(routes):
             # Just update the destination and fare (accumulate)
             prev['destination'] = current['destination']
             prev['fare'] += current['fare']
+            prev['fareIndex']+=current['fareIndex']
         else:
             merged.append(current)
 
@@ -335,12 +389,13 @@ def create_graph(source_id, destination_id):
                 start_name = self.stop_names[start]
                 end_name = self.stop_names[end]
                 highlighted_edges.append(f"{start_name}-{end_name}-{bus_name}")
-            print(f"MST has {len(nodes)} nodes and {len(edges)} edges.")
+
+            data=merge_consecutive_routes(segments)
             return {
                 "nodes": nodes,
                 "edges": edges,
                 "highlightedPath": highlighted_edges,
-                "segments": segments
+                "segments": data
             }
 
     # Step 1: Fetch all buses

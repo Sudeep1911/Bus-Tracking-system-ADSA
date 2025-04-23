@@ -8,6 +8,9 @@ const Busnames = ({ allPlaces }) => {
   const [error, setError] = useState(null);
   const [selectedBus, setSelectedBus] = useState(null);
   const [showAddPopup, setShowAddPopup] = useState(false);
+
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editBusId, setEditBusId] = useState(null);
   const [newBus, setNewBus] = useState({
     name: "",
     type: "",
@@ -49,7 +52,9 @@ const Busnames = ({ allPlaces }) => {
 
   const handleCloseAddPopup = () => {
     setShowAddPopup(false);
-    setNewBus({ name: "", type: "", source: "", destination: "" });
+    setIsEditMode(false);
+    setEditBusId(null);
+    setNewBus({ name: "", type: "", source: "", destination: "", stops: [] });
   };
 
   const handleInputChange = (e) => {
@@ -107,8 +112,22 @@ const Busnames = ({ allPlaces }) => {
           },
         ],
       };
-      await axios.post("http://localhost:5000/buses/addBus", formattedBusData);
-      setBusList([...busList, formattedBusData]);
+      if (isEditMode) {
+        const data = { data: formattedBusData, busId: editBusId };
+        await axios.post("http://localhost:5000/buses/updateBus", data);
+
+        const updatedList = busList.map((bus) =>
+          bus._id === editBusId ? { ...bus, ...formattedBusData } : bus
+        );
+        console.log(updatedList);
+        setBusList(updatedList);
+      } else {
+        await axios.post(
+          "http://localhost:5000/buses/addBus",
+          formattedBusData
+        );
+        setBusList([...busList, formattedBusData]);
+      }
       handleCloseAddPopup();
     } catch (error) {
       console.error("Error adding bus:", error);
@@ -138,6 +157,54 @@ const Busnames = ({ allPlaces }) => {
             </li>
           ))}
         </ul>
+        <div className="Buttons">
+          <button
+            className="edit-btn"
+            onClick={() => {
+              setShowAddPopup(true);
+              setIsEditMode(true);
+              setEditBusId(bus.name); // Assuming your bus has a unique ID
+              setNewBus({
+                name: bus.name,
+                type: bus.type,
+                source: bus.source,
+                destination: bus.destination,
+                stops: bus.routes
+                  .filter(
+                    (r, idx) => idx !== 0 && idx !== bus.routes.length - 1 // skip source and destination
+                  )
+                  .map((r) => r.place),
+              });
+              setSelectedBus(null); // close the view popup
+            }}
+          >
+            Edit
+          </button>
+          <button
+            className="delete-btn"
+            onClick={async () => {
+              if (
+                window.confirm(`Are you sure you want to delete "${bus.name}"?`)
+              ) {
+                try {
+                  await axios.delete(`http://localhost:5000/buses/${bus.name}`);
+                  const updatedList = busList.filter(
+                    (b) => b.name !== bus.name
+                  );
+                  setBusList(updatedList);
+                  alert("Bus deleted successfully!");
+                  handleClosePopup();
+                } catch (err) {
+                  console.error("Error deleting bus:", err);
+                  alert("Failed to delete bus. Please try again.");
+                  handleClosePopup();
+                }
+              }
+            }}
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -177,7 +244,7 @@ const Busnames = ({ allPlaces }) => {
             <span className="close-btn" onClick={handleCloseAddPopup}>
               &times;
             </span>
-            <h2>Add a New Bus</h2>
+            <h2 className="h2">{isEditMode ? "Edit Bus" : "Add a New Bus"}</h2>
             <label>Name:</label>
             <input
               type="text"
@@ -262,7 +329,9 @@ const Busnames = ({ allPlaces }) => {
               ))}
             </select>
 
-            <button onClick={handleSubmitBus}>Add Bus</button>
+            <button onClick={handleSubmitBus} className="edit-btn">
+              {isEditMode ? "Save Bus" : "Add Bus"}
+            </button>
           </div>
         </div>
       )}

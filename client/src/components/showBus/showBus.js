@@ -136,6 +136,7 @@ const ShowBus = ({ source, destination }) => {
       setLoading(false); // Data retrieval failed
     }
   };
+  console.log(graphOrMst);
 
   // Data loaded successfully, render the table
   return (
@@ -143,36 +144,35 @@ const ShowBus = ({ source, destination }) => {
       <h2>Bus Schedules</h2>
 
       {/* Filter buttons */}
-      {filteredBusList.length !== 0 ||
-        (!graphOrMst && (
-          <div className="filter-and-sort">
-            <div className="filter-container">
-              <label htmlFor="bus-filter">Filter: </label>
-              <select
-                id="bus-filter"
-                value={filterType}
-                onChange={(e) => setFilterType(e.target.value)}
-              >
-                <option value="all">All</option>
-                <option value="govt">Government</option>
-                <option value="private">Private</option>
-                <option value="premium">Premium</option>
-              </select>
-            </div>
-            <div className="sort-container">
-              <label htmlFor="sort-filter">Sort by:</label>
-              <select
-                id="sort-filter"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-              >
-                <option value="all">All</option>
-                <option value="stops">No of Stops</option>
-                <option value="fare">Fare</option>
-              </select>
-            </div>
+      {filteredBusList.length !== 0 && !graphOrMst && (
+        <div className="filter-and-sort">
+          <div className="filter-container">
+            <label htmlFor="bus-filter">Filter: </label>
+            <select
+              id="bus-filter"
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+            >
+              <option value="all">All</option>
+              <option value="govt">Government</option>
+              <option value="private">Private</option>
+              <option value="premium">Premium</option>
+            </select>
           </div>
-        ))}
+          <div className="sort-container">
+            <label htmlFor="sort-filter">Sort by:</label>
+            <select
+              id="sort-filter"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
+              <option value="all">All</option>
+              <option value="stops">No of Stops</option>
+              <option value="fare">Fare</option>
+            </select>
+          </div>
+        </div>
+      )}
 
       {filteredBusList.length === 0 && (
         <p className="no-bus-text">
